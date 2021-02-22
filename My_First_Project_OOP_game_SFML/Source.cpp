@@ -162,7 +162,7 @@ private:
 	int cnt;
 	int cnt_bot1;
 	int cnt_bot2;
-
+	Bullet bot_shoot;
 	int rand_move;
 	bool move_in_shoot;
 	float acceleration;
