@@ -7,10 +7,10 @@
 #include<Windows.h>
 #include<iostream>
 #include <vector>
+
 using namespace sf;
 using namespace std;
 #include"Tank.h"
-
 const int H = 1000;
 const int W = 800;
 
@@ -24,7 +24,6 @@ protected:
 	Texture b;
 	Sprite bb;
 public:
-	
 	Bullet(){}	
 	void sprite(float dxb, float dyb)
 	{
@@ -40,10 +39,39 @@ public:
 	{
 		window.clear();
 	}
-
 	void draw(RenderWindow& window)
 	{
 		window.draw(bb);
+	}
+};
+class Bullet2
+{
+protected:
+	int direction2 = 0;
+	float dx_bullet2 = 0;
+	float dy_bullet2 = 0, x, y;
+	bool life;
+	Texture b2;
+	Sprite bb2;
+public:
+	Bullet2() {}
+	void sprite2(float dxb, float dyb)
+	{
+		b2.loadFromFile("C:\\Users\\linec\\Desktop\\fila\\bullets.PNG");
+		bb2.setTexture(b2);
+		bb2.setTextureRect(IntRect(0, 0, 25, 25));
+		bb2.setScale(0.4, 0.4);
+		bb2.setPosition(dxb, dyb);
+		dx_bullet2 = dxb;
+		dy_bullet2 = dyb;
+	}
+	void clear(RenderWindow& window)
+	{
+		window.clear();
+	}
+	void draw(RenderWindow& window)
+	{
+		window.draw(bb2);
 	}
 };
 class Target
@@ -144,7 +172,7 @@ public:
 	}
 };
 
-class Header_class_tank_player: public Tank, public Bullet, public Map, public Tank_bot
+class Header_class_tank_player: public Tank, public Bullet, public Map, public Tank_bot, public Bullet2
 {
 private:
 	string up;
@@ -159,16 +187,21 @@ private:
 	float speedTank;
 	float speedTank_bot;
 	float speedBullet;
+	float bot_speedBullet;
+
 	int cnt;
 	int cnt_bot1;
 	int cnt_bot2;
-	Bullet bot_shoot;
 	int rand_move;
 	bool move_in_shoot;
-	float acceleration;
+	
+	bool die_the_bot;
+	bool end_game;
 public:
 	Header_class_tank_player()
 	{
+		die_the_bot = false;
+		end_game = false;
 		timer = 0;
 		up= "C:\\Users\\linec\\Desktop\\fila\\up.png";
 		right= "C:\\Users\\linec\\Desktop\\fila\\right.png";
@@ -182,14 +215,16 @@ public:
 		dlinapyli = 4000;
 		Sprite_tank_lenght = 44;
 		speedTank = 0.1;
-		speedTank_bot = 0.05;
-		acceleration = 0.05;
+		speedTank_bot = 0.01;
+		
 		speedBullet = 0.6;
+		bot_speedBullet = 0.6;
 		move_in_shoot = false;
 		cnt = 0;
 		cnt_bot1 = 0;
 		cnt_bot2 = 0;
 	}
+	
 	void hit_the_wal()
 	{
 		if ((int)dy == W - Sprite_tank_lenght)
@@ -271,7 +306,6 @@ public:
 		if (move_in_shot_ == true)
 			cnt = 4;
 		dyd_tank -= speedTank_;
-	
 	}
 	void Shoot(RenderWindow & window)
 	{
@@ -290,33 +324,56 @@ public:
 			{
 			case 1:bb.move(speedBullet, 0);
 				dx_bullet += speedBullet;
-				if (Keyboard::isKeyPressed(Keyboard::Right)) Right(speedTank+ acceleration,true);
-				else if (Keyboard::isKeyPressed(Keyboard::Left)) Left(speedTank+ acceleration, false);
-				else if (Keyboard::isKeyPressed(Keyboard::Up)) Up(speedTank+ acceleration, false);
-				else if (Keyboard::isKeyPressed(Keyboard::Down)) Down(speedTank+ acceleration, false);
+				if (Keyboard::isKeyPressed(Keyboard::Right)) Right(speedTank,true);
+				else if (Keyboard::isKeyPressed(Keyboard::Left)) Left(speedTank, false);
+				else if (Keyboard::isKeyPressed(Keyboard::Up)) Up(speedTank, false);
+				else if (Keyboard::isKeyPressed(Keyboard::Down)) Down(speedTank, false);
 				break;
 			case 2:bb.move(-speedBullet, 0); dx_bullet -= speedBullet;
-				if (Keyboard::isKeyPressed(Keyboard::Left)) Left(speedTank+ acceleration, true);
-				else if (Keyboard::isKeyPressed(Keyboard::Right)) Right(speedTank+ acceleration, false);
-				else if (Keyboard::isKeyPressed(Keyboard::Up)) Up(speedTank + acceleration, false);
-				else if (Keyboard::isKeyPressed(Keyboard::Down)) Down(speedTank + acceleration, false);
+				if (Keyboard::isKeyPressed(Keyboard::Left)) Left(speedTank, true);
+				else if (Keyboard::isKeyPressed(Keyboard::Right)) Right(speedTank, false);
+				else if (Keyboard::isKeyPressed(Keyboard::Up)) Up(speedTank , false);
+				else if (Keyboard::isKeyPressed(Keyboard::Down)) Down(speedTank , false);
 				break;
 			case 3:bb.move(0, -speedBullet); dy_bullet -= speedBullet;
-				if (Keyboard::isKeyPressed(Keyboard::Up)) Up(speedTank + acceleration,true);
-				else if (Keyboard::isKeyPressed(Keyboard::Right)) Right(speedTank + acceleration, false);
-				else if (Keyboard::isKeyPressed(Keyboard::Left)) Left(speedTank+ acceleration, false);
-				else if (Keyboard::isKeyPressed(Keyboard::Down)) Down(speedTank + acceleration, false);
+				if (Keyboard::isKeyPressed(Keyboard::Up)) Up(speedTank ,true);
+				else if (Keyboard::isKeyPressed(Keyboard::Right)) Right(speedTank , false);
+				else if (Keyboard::isKeyPressed(Keyboard::Left)) Left(speedTank, false);
+				else if (Keyboard::isKeyPressed(Keyboard::Down)) Down(speedTank , false);
 				break;
 			case 4:bb.move(0, speedBullet); dy_bullet += speedBullet;
-				if (Keyboard::isKeyPressed(Keyboard::Down)) Down(speedTank + acceleration,true);
-				else if (Keyboard::isKeyPressed(Keyboard::Right)) Right(speedTank+ acceleration, false);
-				else if (Keyboard::isKeyPressed(Keyboard::Left)) Left(speedTank+ acceleration, false);
-				else if (Keyboard::isKeyPressed(Keyboard::Up)) Up(speedTank + acceleration, false);
+				if (Keyboard::isKeyPressed(Keyboard::Down)) Down(speedTank,true);
+				else if (Keyboard::isKeyPressed(Keyboard::Right)) Right(speedTank, false);
+				else if (Keyboard::isKeyPressed(Keyboard::Left)) Left(speedTank, false);
+				else if (Keyboard::isKeyPressed(Keyboard::Up)) Up(speedTank , false);
 				break;
 			default:
 				break;
 			}
 			hit_the_wal();
+
+			if ((int)bb.getPosition().x == (int)s_bot.getPosition().x + 25 && bb.getPosition().y< s_bot.getPosition().y + 25 //попадання в танк
+				&& bb.getPosition().y> s_bot.getPosition().y ||
+				bb.getPosition().x > s_bot.getPosition().x && bb.getPosition().x < s_bot.getPosition().x + 25 && (int)bb.getPosition().y == s_bot.getPosition().y)
+			{
+				die_the_bot = true;
+				end_game = false;
+				break;
+			}
+			
+			if ((int)bb.getPosition().y == (int)s_bot.getPosition().y + 25 && bb.getPosition().x< s_bot.getPosition().x + 25 //попадання в танк
+				&& bb.getPosition().x> s_bot.getPosition().x
+				|| bb.getPosition().x > s_bot.getPosition().x && bb.getPosition().x < s_bot.getPosition().x + 25 &&
+				bb.getPosition().y > s_bot.getPosition().y && bb.getPosition().y < s_bot.getPosition().y + 25 && (int)bb.getPosition().x == s_bot.getPosition().x)
+			{
+				die_the_bot = true;
+				end_game = false;
+				break;
+			}
+
+			
+
+
 			if ((int)dy_bullet == W - 20+6)
 				break;
 			if ((int)dx_bullet == H - 20+6)
@@ -326,13 +383,14 @@ public:
 			if ((int)dy_bullet == 15-15)
 				break;
 			move_bot1(window);
-
-			window.clear();
 			
+			window.clear();
+
 			map1(window);
 			Tank::draw(window);
-			Tank_bot::draw(window);
-			window.draw(bb);
+			if(die_the_bot==false)
+				Tank_bot::draw(window);
+			Bullet::draw(window);
 			window.display(); 
 		}
 	}
@@ -340,19 +398,19 @@ public:
 	{
 		if (Keyboard::isKeyPressed(Keyboard::Right))
 		{
-			Right(speedTank+acceleration, true);
+			Right(speedTank, true);
 		}
 		else if (Keyboard::isKeyPressed(Keyboard::Left))
 		{
-			Left(speedTank+acceleration, true);
+			Left(speedTank, true);
 		}
 		else if (Keyboard::isKeyPressed(Keyboard::Up))
 		{
-			Up(speedTank+acceleration, true);
+			Up(speedTank, true);
 		}
 		else if (Keyboard::isKeyPressed(Keyboard::Down))
 		{
-			Down(speedTank+acceleration,true);
+			Down(speedTank,true);
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Space))
 		{
@@ -360,36 +418,118 @@ public:
 		}
 		hit_the_wal();
 	}
-	
-	void shoot_bot()
+	void shoot_bot(RenderWindow& window)
 	{
-		switch (cnt_bot2)
+		switch (cnt_bot2)         //пуля приймає позицію башні танка
 		{
-		case 1:	sprite(dx_bot + 30, dy_bot + 10); break;
-		case 2: sprite(dx_bot - 10, dy_bot + 10); break;
-		case 3: sprite(dx_bot + 10, dy_bot - 10);  break;
-		case 4: sprite(dx_bot + 10, dy_bot + 30); break;
+		case 1:	sprite2(dx_bot + 30, dy_bot + 10); break;
+		case 2: sprite2(dx_bot - 10, dy_bot + 10); break;
+		case 3: sprite2(dx_bot + 10, dy_bot - 10);  break;
+		case 4: sprite2(dx_bot + 10, dy_bot + 30); break;
 		default:
 			break;
 		}
+
+		for (size_t i = 0; i < 5000; i++)
+		{
+			switch (cnt_bot1)
+			{
+			case 1:bb2.move(bot_speedBullet, 0);
+				dx_bullet2 += bot_speedBullet;
+				Tank_bot::Sprite_Tank(right);
+				dx_bot += speedTank_bot;
+				dxd_tank_bot -= speedTank_bot;
+				cnt_bot2 = 1;
+				break;
+			case 2:bb2.move(-bot_speedBullet, 0);
+				dx_bullet2 -= bot_speedBullet;
+				Tank_bot::Sprite_Tank_left(right);
+				dx_bot -= speedTank_bot;
+				dxd_tank_bot += speedTank_bot;
+				cnt_bot2 = 2;
+				break;
+			
+			case 3:bb2.move(0, -bot_speedBullet);
+				dy_bullet2 -= bot_speedBullet;
+
+				Tank_bot::Sprite_Tank(up);
+				dy_bot -= speedTank_bot;
+				dyd_tank_bot += speedTank_bot;
+				cnt_bot2 =3;
+
+				break;
+		
+			case 4:bb2.move(0, bot_speedBullet); 
+				dy_bullet2 += bot_speedBullet;
+
+				Tank_bot::Sprite_Tank_Down(up);
+				dy_bot += speedTank_bot;
+				dyd_tank_bot -= speedTank_bot;
+				cnt_bot2 = 4;
+
+				break;
+			default:
+				break;
+			}
+			if ((int)dy_bullet2 == W - 20 + 6)break;
+			if ((int)dx_bullet2 == H - 20 + 6)break;
+			if ((int)dx_bullet2 == 15 - 15)break;
+			if ((int)dy_bullet2 == 15 - 15)break;
+			hit_the_wal_bot();
+			
+			if ((int)bb2.getPosition().x == (int)s.getPosition().x + 25 && bb2.getPosition().y< s.getPosition().y + 25 //попадання в танк
+				&& bb2.getPosition().y> s.getPosition().y ||
+				bb2.getPosition().x > s.getPosition().x && bb2.getPosition().x < s.getPosition().x + 25 && (int)bb2.getPosition().y == s.getPosition().y)
+			{
+				end_game = true;
+				break;
+			}
+
+			if ((int)bb2.getPosition().y == (int)s.getPosition().y + 25 && bb2.getPosition().x< s.getPosition().x + 25 //попадання в танк
+				&& bb2.getPosition().x> s.getPosition().x
+				|| bb2.getPosition().x > s.getPosition().x && bb2.getPosition().x < s.getPosition().x + 25 &&
+				bb2.getPosition().y > s.getPosition().y && bb2.getPosition().y < s.getPosition().y + 25 && (int)bb2.getPosition().x == s.getPosition().x)
+			{
+				end_game = true;
+				break;
+			}
+		
+
+
+			movePlayer(window);
+			window.clear();
+			map1(window);
+			Tank::draw(window);
+			if (die_the_bot == false)
+			{
+				Tank_bot::draw(window);
+				Bullet2::draw(window);
+			}
+			window.display();
+		}
+		
 	}
-	void bot_eyes()
+	void bot_eyes(RenderWindow& window)
 	{
 		switch (cnt_bot1)
 		{
-		case 1: if ((int)dy == (int)dy_bot && (int)dx > (int)dx_bot) shoot_bot(); break;
-		case 2: if ((int)dy == (int)dy_bot && (int)dx < (int)dx_bot) shoot_bot(); break;
-		case 3: if ((int)dx == (int)dx_bot && (int)dy < (int)dy_bot) shoot_bot(); break;
-		case 4: if ((int)dx == (int)dx_bot && (int)dy > (int)dy_bot) shoot_bot(); break;
+		case 1: if (s.getPosition().y+25 > s_bot.getPosition().y && s.getPosition().y < s_bot.getPosition().y+25 && (int)dx > (int)dx_bot)shoot_bot(window);
+			break;
+		case 2: if ( s.getPosition().y+25 > s_bot.getPosition().y && s.getPosition().y < s_bot.getPosition().y+25 && (int)dx < (int)dx_bot) shoot_bot(window);
+			break;
+		case 3: if (s.getPosition().x+25 > s_bot.getPosition().x && s.getPosition().x  < s_bot.getPosition().x+25  &&(int)dy < (int)dy_bot)  shoot_bot(window);
+			break;
+		case 4: if (s.getPosition().x + 25 > s_bot.getPosition().x && s.getPosition().x  < s_bot.getPosition().x + 25 && (int)dy > (int)dy_bot)  shoot_bot(window);
+			break;
 		default:
 			break;
 		}
 	}
 	void move_bot1(RenderWindow& window)
 	{
-		if (timer == 750)
+		if (timer == 1500)
 		{
-			rand_move =2 ;//rand() % 5;
+			rand_move =   rand() % 5;
 			timer = 0;
 		}
 		if (rand_move == 1)
@@ -399,6 +539,7 @@ public:
 			cnt_bot1 = 4;
 			dyd_tank_bot -= speedTank_bot;
 			cnt_bot2 = 4;
+
 		}
 		else if (rand_move == 2)
 		{
@@ -424,8 +565,9 @@ public:
 			dxd_tank_bot -= speedTank_bot;
 			cnt_bot2 = 1;
 		}
+	
 		hit_the_wal_bot();
-		bot_eyes();
+		bot_eyes(window);
 		timer++;
 	}
 	void man_Up(RenderWindow& window)
@@ -433,6 +575,7 @@ public:
 		srand(time(NULL));
 		while (window.isOpen())
 		{
+			
 			Event event;
 			while (window.pollEvent(event))
 			{
@@ -443,12 +586,12 @@ public:
 			move_bot1(window);
 			window.clear();
 			map1(window);
-			
-			//Bullet::draw(window);
 			Tank::draw(window);
-			Tank_bot::draw(window);
-			
+			if(die_the_bot==false)
+				Tank_bot::draw(window);
 			window.display();
+			if (end_game == true)
+				break;
 		}
 	}
 };
