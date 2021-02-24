@@ -21,6 +21,15 @@
     <ClCompile Include="Tank.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -29,5 +38,19 @@
     <ClInclude Include="Tank.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="map.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bot.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="die.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
