@@ -1,14 +1,14 @@
 ﻿  Source.cpp
-c:\users\linec\source\repos\my_first_project_oop_game_sfml\my_first_project_oop_game_sfml\source.cpp(80): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\linec\source\repos\my_first_project_oop_game_sfml\my_first_project_oop_game_sfml\source.cpp(81): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\linec\source\repos\my_first_project_oop_game_sfml\my_first_project_oop_game_sfml\source.cpp(82): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\linec\source\repos\my_first_project_oop_game_sfml\my_first_project_oop_game_sfml\source.cpp(83): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\linec\source\repos\my_first_project_oop_game_sfml\my_first_project_oop_game_sfml\source.cpp(108): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\linec\source\repos\my_first_project_oop_game_sfml\my_first_project_oop_game_sfml\source.cpp(75): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\linec\source\repos\my_first_project_oop_game_sfml\my_first_project_oop_game_sfml\source.cpp(76): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\linec\source\repos\my_first_project_oop_game_sfml\my_first_project_oop_game_sfml\source.cpp(77): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\linec\source\repos\my_first_project_oop_game_sfml\my_first_project_oop_game_sfml\source.cpp(78): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\linec\source\repos\my_first_project_oop_game_sfml\my_first_project_oop_game_sfml\source.cpp(103): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\linec\source\repos\my_first_project_oop_game_sfml\my_first_project_oop_game_sfml\source.cpp(104): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 c:\users\linec\source\repos\my_first_project_oop_game_sfml\my_first_project_oop_game_sfml\source.cpp(109): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\linec\source\repos\my_first_project_oop_game_sfml\my_first_project_oop_game_sfml\source.cpp(114): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\linec\source\repos\my_first_project_oop_game_sfml\my_first_project_oop_game_sfml\source.cpp(132): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\linec\source\repos\my_first_project_oop_game_sfml\my_first_project_oop_game_sfml\source.cpp(127): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\linec\source\repos\my_first_project_oop_game_sfml\my_first_project_oop_game_sfml\source.cpp(128): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 c:\users\linec\source\repos\my_first_project_oop_game_sfml\my_first_project_oop_game_sfml\source.cpp(133): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\linec\source\repos\my_first_project_oop_game_sfml\my_first_project_oop_game_sfml\source.cpp(138): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\linec\source\repos\my_first_project_oop_game_sfml\my_first_project_oop_game_sfml\source.cpp(197): warning C4018: '<': signed/unsigned mismatch
-c:\users\linec\source\repos\my_first_project_oop_game_sfml\my_first_project_oop_game_sfml\source.cpp(487): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\linec\source\repos\my_first_project_oop_game_sfml\my_first_project_oop_game_sfml\source.cpp(192): warning C4018: '<': signed/unsigned mismatch
+c:\users\linec\source\repos\my_first_project_oop_game_sfml\my_first_project_oop_game_sfml\source.cpp(482): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   My_First_Project_OOP_game_SFML.vcxproj -> C:\Users\linec\source\repos\My_First_Project_OOP_game_SFML\Debug\My_First_Project_OOP_game_SFML.exe
